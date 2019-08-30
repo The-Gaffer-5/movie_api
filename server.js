@@ -3,10 +3,10 @@ const http = require('http'),
       url = require('url');
 
 
-http.createServer((request, response) => {
-  var addr = request.url,
-      q = url.parse(addr, true),
-      filePath = '';
+      http.createServer((request, response) => {
+        var addr = request.url,
+          q = url.parse(addr, true),
+          filePath = '';
 
   if (q.pathname.includes('documentation')) {
     filePath = (__dirname + '/documentation.html');
@@ -14,7 +14,7 @@ http.createServer((request, response) => {
     filePath = 'index.html';
   }
 
-  js.appendFile('log.txt', 'URL: ' + addr + '\nTimestamp: ' + new Date() + '\n\n', function(err){
+  fs.appendFile('log.txt', 'URL: ' + addr + '\nTimestamp: ' + new Date() + '\n\n', function(err){
     if (err) {
       console.log(err);
     }
@@ -28,7 +28,3 @@ http.createServer((request, response) => {
 }).listen(8080);
 
 console.log('My first Node test server is running on Port 8080.');
-
-
-var addr = request.url;
-var q = url.parse(addr, true);
