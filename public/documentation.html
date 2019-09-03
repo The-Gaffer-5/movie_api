@@ -4,3 +4,50 @@ This web application will
 provide users with access to information about different movies, directors, and genres. Users
 will be able to sign up, update their personal information, and create a list of their favorite
 movies.
+
+
+---------------THE ENDPOINTS------------------
+
+app.get('/movies', (req, res)
+
+  Returns all the Film in JSON
+
+--------------------------
+app.get('/movies/:name', (req, res)
+
+  Returns all data about specific film in JSON
+
+--------------------------
+app.get('/genres/:name', (req, res)
+
+  Returns all films by genre in JSON
+
+--------------------------
+app.get('/directors/:name', (req, res)
+
+  Returns all data about director in JSON
+
+--------------------------
+app.post('/users', (req, res)
+
+  Creates a new user
+
+--------------------------
+app.put('/users/:name', (req, res)
+
+  Updates user information
+
+--------------------------
+app.post('/mylist', (req, res)
+
+  Adds new film to users favorites list
+
+--------------------------
+app.delete('/mylist/:name', (req, res)
+
+  Removes film from users favorites list
+
+--------------------------
+app.delete('/users/:name', (req, res)
+
+  Unregisters User
