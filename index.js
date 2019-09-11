@@ -181,7 +181,7 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}), func
       res.json(updatedUser)
     }
   });
-});
+};);
 
 app.post('/users/:Username/FavoriteMovies/:MovieID', passport.authenticate('jwt', {session: false}), function(req, res) {
   Users.findOneAndUpdate({ Username : req.params.Username }, {
