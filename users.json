@@ -1,0 +1,6 @@
+{"_id":{"$oid":"5d779b5d3b9b9790da945ad1"},"Username":"Chad Chaderson","Password":"pass123","email":"chad@chad.com","Birthday":"1985-02-19","FavoriteFilm":[]}
+{"_id":{"$oid":"5d779b5f3b9b9790da945ad2"},"Username":"Frank Frankerson","Password":"pass123","email":"frank@frank.com","Birthday":"1970-02-19","FavoriteFilm":[]}
+{"_id":{"$oid":"5d779b623b9b9790da945ad3"},"Username":"Joe Joeerson","Password":"pass123","email":"Joe@joe.com","Birthday":"1985-01-01","FavoriteFilm":[]}
+{"_id":{"$oid":"5d779f0fca3f4cd24c13ccfb"},"FavoriteMovies":[],"__v":0}
+{"_id":{"$oid":"5d77ab45e06f8dd44b25ed87"},"FavoriteMovies":[],"Username":"New New","Password":"passpass","Email":"newnew@new.com","Birthday":{"$date":"1985-01-02T00:00:00.000Z"},"__v":0}
+{"_id":{"$oid":"5d77eca0484ee2dc2a1c8216"},"FavoriteMovies":[],"Username":"Prescott","Password":"passpass","Email":"test@new.com","Birthday":{"$date":"1980-01-02T00:00:00.000Z"},"__v":0}
