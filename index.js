@@ -1,10 +1,28 @@
+const cors = require('cors');
+app.use(cors());
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 require('./passport');
+const { check, validationResult } = require('express-validator');
 
 
+//---------------CORs---------------------//
+var allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+app.use(cors({
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      var message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
+
+//---------------------------------------------//
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
 
@@ -84,24 +102,43 @@ app.get('/users', passport.authenticate('jwt', {session: false}), function(req, 
   });
 });
 
-app.post('/users', (req, res) => {
-  Users.findOne({ Username : req.body.Username })
+app.post('/users',
+  // Validation logic here for request
+  //you can either use a chain of methods like .not().isEmpty()
+  //which means "opposite of isEmpty" in plain english "is not empty"
+  //or use .isLength({min: 5}) which means
+  //minimum value of 5 characters are only allowed
+  [check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()],(req, res) => {
+
+  // check the validation object for errors
+  var errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
+  var hashedPassword = Users.hashPassword(req.body.Password);
+  Users.findOne({ Username : req.body.Username }) // Search to see if a user with the requested username already exists
   .then(function(user) {
     if (user) {
-      return res.status(400).send(req.body.Username + " already used");
+      //If the user is found, send a response that it already exists
+        return res.status(400).send(req.body.Username + " already exists");
     } else {
       Users
       .create({
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday
+        Username : req.body.Username,
+        Password: hashedPassword,
+        Email : req.body.Email,
+        Birthday : req.body.Birthday
       })
-      .then(function(user) {res.status(201).json(user) })
+      .then(function(user) { res.status(201).json(user) })
       .catch(function(error) {
-        console.error(error);
-        res.status(500).send("Error: " + error);
-      })
+          console.error(error);
+          res.status(500).send("Error: " + error);
+      });
     }
   }).catch(function(error) {
     console.error(error);
@@ -110,10 +147,27 @@ app.post('/users', (req, res) => {
 });
 
 app.put('/users/:Username', passport.authenticate('jwt', {session: false}), function(req, res) {
+  // Validation logic here for request
+  //you can either use a chain of methods like .not().isEmpty()
+  //which means "opposite of isEmpty" in plain english "is not empty"
+  //or use .isLength({min: 5}) which means
+  //minimum value of 5 characters are only allowed
+  [check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()],(req, res) => {
+
+  // check the validation object for errors
+  var errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+  var hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOneAndUpdate({ Username : req.params.Username }, { $set :
   {
     Username : req.body.Username,
-    Password : req.body.Password,
+    Password : hashPassword,
     Email : req.body.Email,
     Birthday : req.body.Birthday
   }},
@@ -175,5 +229,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), f
 
 
 
-app.listen(8080, () =>
-  console.log('It\'s on 8080!'));
+var port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", function() {
+console.log("Listening on Port 3000");
+});
