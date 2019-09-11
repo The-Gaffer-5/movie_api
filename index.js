@@ -1,5 +1,4 @@
 const cors = require('cors');
-app.use(cors());
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 const bodyParser = require('body-parser');
@@ -11,16 +10,7 @@ const { check, validationResult } = require('express-validator');
 //---------------CORs---------------------//
 var allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
-app.use(cors({
-  origin: function(origin, callback){
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-      var message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
-      return callback(new Error(message ), false);
-    }
-    return callback(null, true);
-  }
-}));
+
 
 //---------------------------------------------//
 
@@ -33,6 +23,17 @@ const app = express();
 
 const Movies = Models.Movie;
 const Users = Models.User;
+
+app.use(cors({
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      var message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -147,41 +148,39 @@ app.post('/users',
   });
 });
 
-app.put('/users/:Username', passport.authenticate('jwt', {session: false}), function(req, res) {
-  // Validation logic here for request
-  //you can either use a chain of methods like .not().isEmpty()
-  //which means "opposite of isEmpty" in plain english "is not empty"
-  //or use .isLength({min: 5}) which means
-  //minimum value of 5 characters are only allowed
-  [check('Username', 'Username is required').isLength({min: 5}),
-  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-  check('Password', 'Password is required').not().isEmpty(),
-  check('Email', 'Email does not appear to be valid').isEmail()],(req, res) => {
+app.put('/users/:Username', passport.authenticate('jwt',{ session: false}), function(req, res) {
+  req.checkBody('Username', 'Username is required').notEmpty();
+  req.checkBody('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric()
+  req.checkBody('Password', 'Password is required').notEmpty();
+  req.checkBody('Email', 'Email is required').notEmpty();
+  req.checkBody('Email', 'Email does not appear to be valid').isEmail();
 
   // check the validation object for errors
-  var errors = validationResult(req);
+    var errors = req.validationErrors();
+    if (errors) {
+      return res.status(422).json({ errors: errors });
+    }
 
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
-  var hashedPassword = Users.hashPassword(req.body.Password);
-  Users.findOneAndUpdate({ Username : req.params.Username }, { $set :
-  {
-    Username : req.body.Username,
-    Password : hashPassword,
-    Email : req.body.Email,
-    Birthday : req.body.Birthday
-  }},
-  { new : true },
-  function(err, updatedUser) {
-    if(err) {
+  Users.findOneAndUpdate({Username: req.params.Username},
+  {$set:
+    {
+      Username: req.body.Username,
+      Password:req.body.Password,
+      Email: req.body.Email,
+      Birthday: req.body.Birthday
+    }
+  },
+  {new: true},//ensures updated user profile is returned
+  function(err,updatedUser){
+    if (err){
       console.error(err);
-      res.status(500).send("Error: " +err);
-    } else {
+      res.status(500).send("Error:" + err);
+    }else{
       res.json(updatedUser)
     }
   });
-};);
+});
+
 
 app.post('/users/:Username/FavoriteMovies/:MovieID', passport.authenticate('jwt', {session: false}), function(req, res) {
   Users.findOneAndUpdate({ Username : req.params.Username }, {
