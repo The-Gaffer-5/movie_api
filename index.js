@@ -10,7 +10,7 @@ require('./passport');
 const { check, validationResult } = require('express-validator');
 
 
-var allowedOrigins = *;
+var allowedOrigins = [*];
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
 mongoose.connect('mongodb+srv://myFlixDBadmin:aq1SW@de3@myflixdb-gz5aj.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
