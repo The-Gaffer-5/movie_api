@@ -42,7 +42,6 @@ export class MovieView extends React.Component {
         <button onClick={() => headBack()} className="go-back">Go Back!</button>
       </div>
 
-
     );
   }
 }
