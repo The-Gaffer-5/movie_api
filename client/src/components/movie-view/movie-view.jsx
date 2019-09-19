@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 
 export class MovieView extends React.Component {
@@ -14,8 +15,6 @@ export class MovieView extends React.Component {
   render() {
 
     const { movie, headBack } = this.props;
-    console.log(this.state)
-
 
 
     if (!movie) return null;
@@ -45,3 +44,11 @@ export class MovieView extends React.Component {
     );
   }
 }
+
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired
+  }).isRequired,
+  onClick: PropTypes.func.isRequired
+};

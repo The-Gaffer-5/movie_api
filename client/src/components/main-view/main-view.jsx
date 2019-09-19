@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { LoginView } from '../login-view/login-view';
+import { RegistrationView } from '../registration-view/registration-view';
 
 export class MainView extends React.Component {
 
@@ -12,7 +14,8 @@ export class MainView extends React.Component {
     this.state = {
       movies: null,
       selectedMovie: null,
-      headBack: null
+      user: null,
+      newUser: null
     };
   }
 
@@ -37,8 +40,25 @@ export class MainView extends React.Component {
     });
   }
 
+  onLoggedIn(user) {
+    this.setState({
+      user
+    });
+  }
   changeOutLook = () => {
     this.setState({ selectedMovie: null })
+  }
+
+  needToRegister = (newUser) => {
+    this.setState({
+      newUser
+    });
+  }
+
+  onRegister = (user) => {
+    this.setState({
+      user
+    })
   }
 
 
@@ -46,9 +66,11 @@ export class MainView extends React.Component {
     //console.log(this.props)
     // If the state isn't initialized, this will throw on runtime
     // before the data is initially loaded
-    const { movies, selectedMovie } = this.state;
-    console.log(this.state)
+    const { movies, selectedMovie, user, newUser } = this.state;
 
+    if (!user && !newUser) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} needToRegister={newUser => this.needToRegister(newUser)} />;
+
+    if (!user && newUser) return <RegistrationView onRegister={user => this.onRegister(user)} />;
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
 
