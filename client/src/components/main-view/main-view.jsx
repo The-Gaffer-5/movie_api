@@ -38,11 +38,29 @@ export class MainView extends React.Component {
     this.setState({
       selectedMovie: movie
     });
+
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.Username);
+    this.getMovies(authData.token);
   }
 
-  onLoggedIn(user) {
+  getMovies(token) {
+    axios.get('https://prescottflixapp.herokuapp.com/movies', {
+      headers: { Authorization: 'Bearer ${token}' }
+    })
+      .then(response => {
+        this.setState({
+          movies: response.data
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
+  onLoggedIn(authData) {
+    console.log(authData)
     this.setState({
-      user
+      user: authData.user.Username
     });
   }
   changeOutLook = () => {
