@@ -1,13 +1,12 @@
-html body {
+html
+body {
   background-color: #f3f3f3;
 }
-
 .main-view {
   height: 100vh;
   text-align: center;
   background-color: #807f7e;
 }
-
 .cards {
   width: 300px;
   margin: 2px;
@@ -24,6 +23,7 @@ html body {
   z-index: 1;
 }
 
+
 .cards img {
   width: 299px;
   display: block;
@@ -36,7 +36,6 @@ html body {
   width: 100%;
   height: 100%;
 }
-
 .cards h1 {
   position: absolute;
   color: #fff;
@@ -53,17 +52,6 @@ html body {
 }
 
 .cards h4 {
-  color: orange;
-}
-.movie-view {
-  color: #fff;
-}
-.the-text {
-  font-size: 25px;
-  color: #fff;
-}
-.my-flix {
-  color: steelblue;
+  color: orange
 }
 
-/*# sourceMappingURL=/src.78399e21.css.map */

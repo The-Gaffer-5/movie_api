@@ -9,7 +9,7 @@ export function LoginView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
+    //console.log(username, password);
     /* Send a request to the server for authentication */
     axios.post('https://prescottflixapp.herokuapp.com/login', {
       Username: username,
