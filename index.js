@@ -185,7 +185,7 @@ app.post('/users/:Username/FavoriteMovies/:MovieID', passport.authenticate('jwt'
     })
 });
 
-app.delete('users/:Username/FavoriteMovies/:MovieID', passport.authenticate('jwt', { session: false }), function (req, res) => {
+app.delete('users/:Username/FavoriteMovies/:MovieID', passport.authenticate('jwt', { session: false }), function (req, res) {
   Users.findOneAndRemove({ Username: req.params.Username })
     .then(function (user) {
       if (!user) {
