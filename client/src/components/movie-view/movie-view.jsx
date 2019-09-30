@@ -23,34 +23,31 @@ export class MovieView extends React.Component {
 
     return (
       <div className="movie-view">
-        <div className="movie-title">
-          <div className="label">Title</div>
-          <div className="value">{movie.Title}</div>
-        </div>
-        <div className="movie-description">
-          <div className="label">Description</div>
-          <div className="value">{movie.Description}</div>
-        </div>
-        <img className="movie-poster" src={movie.ImagePath} />
-        <div className="movie-genre">
-          <div className="label">Genre</div>
-          <div className="value">{movie.Genre.Name}</div>
-          <Link to={`/genres/${movie.Genre.Name}`}>
-            <Button variant="link">Genre</Button>
-          </Link>
-        </div>
-        <div className="movie-director">
-          <div className="label">Director</div>
-          <div className="value">{movie.Director.Name}</div>
-          <Link to={`/directors/${movie.Director.Name}`}>
-            <Button variant="link">Director</Button>
-          </Link>
-        </div>
-        <Link to={'/'}>
-          <Button className="view-btn" variant="primary" type="button">
-            BACK
+        <h1>Nerdflix</h1>
+        <img className="movie-poster" src={movie.imageURL} />
+        <div className="movie-info">
+          <div className="movie-title">
+            <div className="value">{movie.Title}</div>
+          </div>
+          <div className="movie-description">
+            <div className="value">{movie.Description}</div>
+          </div>
+          <div className="movie-genre">
+            <Link to={`/genres/${movie.Genre.Name}`}>
+              <Button variant="link">{movie.Genre.Name}</Button>
+            </Link>
+          </div>
+          <div className="movie-director">
+            <Link to={`/directors/${movie.Director.Name}`}>
+              <Button variant="link">{movie.Director.Name}</Button>
+            </Link>
+          </div>
+          <Link to={'/'}>
+            <Button className="view-btn" variant="primary" type="button">
+              BACK
           </Button>
-        </Link>
+          </Link>
+        </div>
       </div>
 
     );

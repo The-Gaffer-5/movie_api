@@ -1,0 +1,59 @@
+.profile-view{
+  margin-top: 100px;
+  position: absolute;
+  background-color: #000;
+  border-radius: 30px;
+  left: 50%;
+  margin-left: -300px;
+  height: 600px;
+  width: 600px;
+}
+
+.profile-view h1{
+  color: #fff;
+  font-weight: 100;
+  margin-top: 50px;
+  text-align: left;
+  margin-left: 50px;
+}
+
+.profile-view h2 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 100;
+  text-align: left;
+  margin-left: 50px;
+}
+
+.favorites h2 {
+  margin-top: 50px;
+}
+
+.favorites h3 {
+  color: #fff;
+  font-weight: 100;
+  font-size: 15px;
+  text-align: left;
+  margin-left: 50px;
+  display: inline;
+}
+
+.remove-btn {
+  background-color: #000 !important;
+  border-color: #000 !important;
+  color: blue !important;
+}
+
+.each-fav {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.unregister {
+  float: right;
+  margin-right: 30px;
+  margin-top: 60px;
+  background-color: #000 !important;
+  border-color: #000 !important;
+  color: red !important;
+}

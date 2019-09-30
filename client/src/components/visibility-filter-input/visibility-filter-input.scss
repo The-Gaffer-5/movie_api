@@ -1,0 +1,11 @@
+input[type="search"] {
+  background-color:#000;
+  color: #000 !important;
+  outline: #fff !important;
+}
+
+input[type="search"]:focus {
+  background-color:#000;
+  color: #fff !important;
+  outline: #fff !important;
+}

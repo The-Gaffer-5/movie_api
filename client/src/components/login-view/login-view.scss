@@ -1,0 +1,87 @@
+body {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7),rgba(0, 0, 0, 0.7)), url(login-bg.jpg);
+  background-size: cover;
+  background-position: fixed;
+  text-align: center;
+}
+
+.the-box {
+  width: 400px;
+  background-color: rgba(0, 0, 0, 0.6);
+  margin-top: 75px;
+  position: absolute;
+  left: 50%;
+  margin-left: -200px;
+  height: 600px;
+}
+
+.title h1 {
+  color: #ffdd00;
+  font-weight: 100;
+  font-size: 70px;
+  display: block;
+  float: left;
+  margin-left: 30px;
+  margin-top: 10px;
+}
+
+.big-view {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7),rgba(0, 0, 0, 0.7)), url(login-bg.jpg);
+  background-size: cover;
+  background-position: fixed;
+  text-align: center;
+}
+
+.the-form {
+  width: 70%;
+  position: absolute;
+  left: 50%;
+  margin-left: -140px;
+}
+
+.box-title h2 {
+  color: #fff;
+  margin-top: 50px;
+  width: 70%;
+  padding-right: 75px;
+}
+
+textarea { 
+  background-color:gray !important;
+}
+
+input[type="text"] {
+  background-color:#333;
+  color: #fff;
+  border: #333;
+}
+
+input[type="password"] {
+  background-color:#333;
+  border: #333;
+}
+
+input[type="email"] {
+  background-color:#333;
+  border: #333;
+}
+
+.the-box h4 {
+  margin-top: 400px;
+  color: #888;
+  font-size: 20px;
+  font-weight: 100;
+}
+
+.the-box p {
+  color: #fff;
+  font-weight: 100;
+}
+
+.the-btn {
+  background-color: #ff1100 !important;
+  color: #fff !important;
+  border:  #ffdd00 !important;
+  width: 280px !important;
+  margin-top: 30px;
+}

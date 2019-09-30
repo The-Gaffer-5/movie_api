@@ -2,19 +2,55 @@ import React from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { MovieCard } from '../movie-card/movie-card';
+import { Link } from 'react-router-dom';
+
+import './profile-view.scss'
 
 export class ProfileView extends React.Component {
   constructor() {
     super();
 
-    // this.state = {
-    //   username: null,
-    //   password: null,
-    //   email: null,
-    //   birthday: null,
-    //   userData: null,
-    //   favoriteMovies: [],
-    // }
+    this.state = {
+      username: null,
+      password: null,
+      email: null,
+      birthday: null,
+      userData: null,
+      FavoriteMovies: [],
+    }
+  }
+
+  componentDidMount() {
+    //authentication
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.getUser(accessToken);
+    }
+  }
+
+  //get user
+  getUser(token) {
+    let daUsername = localStorage.getItem('user');
+    axios.get(`https://prescottflixapp.herokuapp.com/users`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(response => {
+        response.data.find(u => {
+          if (u.Username === daUsername) {
+            this.setState({
+              username: u.Username,
+              password: u.Password,
+              email: u.Email,
+              birthday: u.Birthday,
+              userData: u,
+              FavoriteMovies: u.FavoriteMovies
+            });
+          }
+        })
+      })
+      .catch(function (error) {
+        console.log('errors', error);
+      });
   }
 
   unRegister() {
@@ -34,49 +70,91 @@ export class ProfileView extends React.Component {
       });
   }
 
-  removeFaveMovie(favMovie) {
-    console.log({ favMovie })
-    axios.delete(`https://prescottflixapp.herokuapp.com/users/${localStorage.getItem('user')}/FavoriteMovies/${favMovie}`, {
+  // removeFaveMovie(favMovie) {
+  //   console.log({ favMovie })
+  //   axios.delete(`https://prescottflixapp.herokuapp.com/users/${localStorage.getItem('user')}/FavoriteMovies/${favMovie}`, {
+  //     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+  //   })
+  //     .then(response => {
+  //       console.log(response)
+  //     })
+  //     .catch(event => {
+  //       alert('Oops... something went wrong...');
+  //     });
+  // }
+
+
+  // removeFaveMovie(event, favMovie) {
+  //   event.preventDefault();
+  //   axios.delete(`https://prescottflixapp.herokuapp.com/users/${localStorage.getItem('user')}/FavoriteMovies/${favMovie}`, {
+  //     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+  //   })
+  //     .then(response => {
+  //       // update state with current movie data
+  //       this.getUser(localStorage.getItem('token'));
+  //     })
+  //     .catch(event => {
+  //       alert('Snap something went wrong while deleting this movie from favorite list');
+  //     });
+  // }
+
+  handleSubmit(event, theMovie) {
+    console.log(this.state.FavoriteMovies)
+    console.log(theMovie)
+    event.preventDefault();
+    axios.delete(`https://prescottflixapp.herokuapp.com/users/${localStorage.getItem('user')}/FavoriteMovies/${theMovie}`, {
+      Username: localStorage.getItem('user')
+    }, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(response => {
-        console.log(response)
+        console.log(response);
+        window.location.reload();
+        alert('Movie has been removed from your Favorite List!');
       })
       .catch(event => {
-        alert('Oops... something went wrong...');
+        console.log('error removing movie from list');
+        alert('Oops... Something went wrong!');
       });
+  };
+
+  logOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.setState({ user: null })
+    window.location.reload();
   }
+
 
   render() {
     const { userMe, movies } = this.props
-    if (!userMe) return null;
-    if (!movies) return null;
-    console.log(userMe.FavoriteMovies)
-    console.log(movies);
+
 
     return (
-      <div>
-        <h1>Profile</h1>
-        {userMe.Username}
-        {userMe.Birthday}
-        {userMe.Email}
-        <div>
+      <div className="profile-view">
+
+        <Button className="unregister" onClick={() => this.unRegister()}> Unregister </Button>
+        <h1>{this.state.username}</h1>
+        <h2>Birthday: {this.state.birthday}</h2>
+        <h2>Email: {this.state.email}</h2>
+        <div className="favorites">
+          <h2>My Favorite Movies: </h2>
           {movies.map(m => {
             if (
-              m._id === userMe.FavoriteMovies.find(fav => fav === m._id)
+              m._id === this.state.FavoriteMovies.find(fav => fav === m._id)
             ) {
               return (
-                <div>
-                  My Favorite Movies:
-                  {m.Title}
-                  <Button onClick={() => this.removeFaveMovie(m._id)}>Delete</Button>
+                <div className="each-fav">
+                  <h3>{m.Title}</h3>
+                  <Button className="remove-btn" onClick={(event) => this.handleSubmit(event, m._id)}>(remove)</Button>
                 </div>
               )
             }
           })}
         </div>
-        <Button onClick={() => this.unRegister()}> UnRegister </Button>
-      </div>
+        <Button className="logout" onClick={() => this.logOut()}> Logout </Button>
+
+      </div >
     )
   }
 }

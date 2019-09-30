@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+
+import './login-view.scss'
 
 export function LoginView(props) {
   const [username, setUsername] = useState('');
@@ -31,23 +34,37 @@ export function LoginView(props) {
 
 
   return (
-    <div>
-      <Form>
-        <Form.Group controlId="formBasicUsername">
-          <Form.Label>Username:</Form.Label>
-          <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
-        </Form.Group>
+    <div className="big-view">
+      <div className="title">
+        <h1>Nerdflix</h1>
+      </div>
+      <div className="the-box">
+        <div className="box-title">
+          <h2>Login</h2>
+        </div>
+        <div className="the-form">
+          <Form>
+            <Form.Group controlId="formBasicUsername">
+              <Form.Label></Form.Label>
+              <Form.Control type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
+            </Form.Group>
 
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-        </Form.Group>
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
-          Submit
-        </Button>
-      </Form>
-      <h4>Are you new?</h4>
-      <button type="button" onClick={nowRegister}>Register</button>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label></Form.Label>
+              <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+            </Form.Group>
+            <Button className="the-btn" variant="primary" type="submit" onClick={handleSubmit}>
+              Submit
+              </Button>
+          </Form>
+        </div>
+        <h4>Are you new?</h4>
+        <p>
+          <Link to={'/register'}>
+            <span>Register here</span>
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

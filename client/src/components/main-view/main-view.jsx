@@ -1,8 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 
+import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+import { setMovies } from '../../actions/actions';
+
+import MoviesList from '../movies-list/movies-list';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
@@ -68,9 +73,7 @@ export class MainView extends React.Component {
     })
       .then(response => {
         // Assign the result to the state
-        this.setState({
-          movies: response.data
-        });
+        this.props.setMovies(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -78,7 +81,6 @@ export class MainView extends React.Component {
   }
 
   onLoggedIn(authData) {
-    console.log(authData);
     this.setState({
       user: authData.user.Username
     });
@@ -112,14 +114,14 @@ export class MainView extends React.Component {
 
 
   render() {
-    //console.log(this.props)
-    // If the state isn't initialized, this will throw on runtime
-    // before the data is initially loaded
-    const { movies, selectedMovie, user, newUser, genreName, users, daToken } = this.state;
+    let { movies } = this.props;
+    let { user } = this.state;
+
+    // const { movies, selectedMovie, user, newUser, genreName, users, daToken } = this.state;
 
 
 
-    if (!user && newUser) return <RegistrationView onRegister={user => this.onRegister(user)} />;
+    //if (!user) return <RegistrationView onRegister={user => this.onRegister(user)} />;
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
 
@@ -127,16 +129,25 @@ export class MainView extends React.Component {
       <Router>
         <div className="main-view">
           <Route exact path="/" render={() => {
-            if (!user && !newUser) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} needToRegister={newUser => this.needToRegister(newUser)} />;
-            return movies.map(m => <MovieCard key={m._id} movie={m} />)
+            //if (!user && !newUser) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} needToRegister={newUser => this.needToRegister(newUser)} />;
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+            return <MoviesList user={user} movies={movies} />;
+            //return movies.map(m => <MovieCard key={m._id} movie={m} />)
           }} />
+          <Route path="/register" render={() => <RegistrationView onRegister={user => this.onRegister(user)} />} />
           <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
           <Route path="/genres/:Name" render={({ match }) => movies.map(m => { if (m.Genre.Name === match.params.Name) return <GenreView key={m._id} movie={m} /> })} />
           <Route path="/directors/:name" render={({ match }) => movies.map(m => { if (m.Director.Name === match.params.name) return <DirectorView key={m._id} movie={m} /> })} />
 
-          <Route path="/profile" render={() => <ProfileView movies={movies} userMe={users.find(u => u.Username === user)} />} />
+          <Route path="/profile" render={() => { if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />; return <ProfileView movies={movies} />; }} />
         </div>
       </Router>
     );
   }
 }
+
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
+
+export default connect(mapStateToProps, { setMovies })(MainView);

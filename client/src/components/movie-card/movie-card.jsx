@@ -13,37 +13,54 @@ export class MovieCard extends React.Component {
   }
 
 
-  AddtoFavs(theMovie) {
-    console.log(theMovie)
-    console.log(theMovie._id)
+  // AddtoFavs(theMovie) {
+  //   console.log(theMovie)
+  //   console.log(theMovie._id)
+  //   event.preventDefault();
+  //   console.log(localStorage.getItem('token'))
+  //   axios.post(`https://prescottflixapp.herokuapp.com/users/${localStorage.getItem('user')}/FavoriteMovies/${theMovie._id}`, {
+  //     headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+  //   })
+  //     .then(response => {
+  //       console.log(response)
+  //       alert(`${theMovie.Title}: Added To Favorites`);
+  //     })
+  //     .catch(event => {
+  //       console.log(event)
+  //       alert(`${theMovie.Title}: NOT added To Favorites`);
+  //     });
+  // }
+
+  handleSubmit(event, theMovie) {
     event.preventDefault();
-    console.log(localStorage.getItem('token'))
     axios.post(`https://prescottflixapp.herokuapp.com/users/${localStorage.getItem('user')}/FavoriteMovies/${theMovie._id}`, {
-      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      Username: localStorage.getItem('user')
+    }, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(response => {
-        console.log(response)
-        alert(`${theMovie.Title}: Added To Favorites`);
+        console.log(response);
+        alert('Movie has been added to your Favorite List!');
       })
       .catch(event => {
-        console.log(event)
-        alert(`${theMovie.Title}: NOT added To Favorites`);
+        console.log('error adding movie to list');
+        alert('Oops... Something went wrong!');
       });
-  }
+  };
   render() {
     const { movie } = this.props;
 
     return (
       <div className="cards" id="cardID">
-        <img src={movie.imageURL} alt="movie images" />
+        <div className="overlay"></div>
+        <img className="the-img" src={movie.imageURL} alt="movie images" />
         <div className="text-area">
-          <Link to={`/movies/${movie._id}`}>
+          <Link className="the-link" to={`/movies/${movie._id}`}>
             <h1>{movie.Title}</h1>
           </Link>
-
-          <h3>{movie.Genre.Name}</h3>
-          <h4 onClick={() => this.AddtoFavs(movie)}>
-            Add to Favorites
+          <h5 className="the-genre">Genre: {movie.Genre.Name}<br></br>Director: {movie.Director.Name}</h5>
+          <h4 className="the-heart" onClick={event => this.handleSubmit(event, movie)}>
+            <ion-icon name="heart"></ion-icon>
           </h4>
         </div>
       </div>

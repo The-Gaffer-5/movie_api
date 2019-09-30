@@ -1,3 +1,53 @@
 .movie-view {
   color: #fff;
+  background-color: #000;
+  height: 100vh;
+}
+
+.movie-poster {
+  width: 400px;
+  float: right;
+  margin-right: 100px;
+  margin-top: 75px;
+  position: relative;
+}
+
+.movie-info {
+  padding-top: 170px;
+  width: 900px;
+
+}
+
+.movie-title {
+  font-size: 40px;
+  font-weight: 100;
+  margin-bottom: 50px;
+}
+
+.movie-description {
+  font-size: 25px;
+  font-weight: 100;
+  margin-bottom: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.movie-view h1 {
+  color: #ffdd00;
+  font-weight: 100;
+  font-size: 70px;
+  display: inline-block;
+  float: left;
+  margin-left: 95px;
+}
+
+.movie-director Button{
+  font-size: 30px;
+  font-weight: 100;
+  margin-bottom: 50px;
+}
+
+.movie-genre Button{
+  font-size: 30px;
+  font-weight: 100;
 }
