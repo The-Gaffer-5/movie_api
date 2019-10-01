@@ -38556,11 +38556,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.setMovies = setMovies;
 exports.setFilter = setFilter;
-exports.SET_FILTER = exports.SET_MOVIES = void 0;
+exports.sortColumn = sortColumn;
+exports.SET_COLUMN = exports.SET_FILTER = exports.SET_MOVIES = void 0;
 var SET_MOVIES = 'SET_MOVIES';
 exports.SET_MOVIES = SET_MOVIES;
 var SET_FILTER = 'SET_FILTER';
 exports.SET_FILTER = SET_FILTER;
+var SET_COLUMN = 'SET_COLUMN';
+exports.SET_COLUMN = SET_COLUMN;
 
 function setMovies(value) {
   return {
@@ -38572,6 +38575,13 @@ function setMovies(value) {
 function setFilter(value) {
   return {
     type: SET_FILTER,
+    value: value
+  };
+}
+
+function sortColumn(value) {
+  return {
+    type: SET_COLUMN,
     value: value
   };
 }
@@ -40314,7 +40324,14 @@ function (_React$Component) {
       if (!movie) return null;
       return _react.default.createElement("div", {
         className: "movie-view"
-      }, _react.default.createElement("h1", null, "Nerdflix"), _react.default.createElement("img", {
+      }, _react.default.createElement("div", {
+        className: "header"
+      }, _react.default.createElement("h1", null, "Nerdflix"), _react.default.createElement(_reactRouterDom.Link, {
+        className: "the-x",
+        to: '/'
+      }, _react.default.createElement("ion-icon", {
+        name: "close"
+      }))), _react.default.createElement("img", {
         className: "movie-poster",
         src: movie.imageURL
       }), _react.default.createElement("div", {
@@ -40339,13 +40356,7 @@ function (_React$Component) {
         to: "/directors/".concat(movie.Director.Name)
       }, _react.default.createElement(_Button.default, {
         variant: "link"
-      }, movie.Director.Name))), _react.default.createElement(_reactRouterDom.Link, {
-        to: '/'
-      }, _react.default.createElement(_Button.default, {
-        className: "view-btn",
-        variant: "primary",
-        type: "button"
-      }, "BACK"))));
+      }, movie.Director.Name)))));
     }
   }]);
 
@@ -40478,135 +40489,118 @@ module.hot.accept(reloadCSS);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.GenreView = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
 require("./genre-view.scss");
 
+var _movieCard = require("../movie-card/movie-card");
+
+var _reactRouterDom = require("react-router-dom");
+
+var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+
+var _reactRedux = require("react-redux");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function GenreView(props) {
+  var movies = props.movies,
+      genreType = props.genreType;
+  if (!movies || !movies.length) return null;
+  var cards = movies.map(function (m) {
+    if (m.Genre.Name === genreType) return _react.default.createElement(_movieCard.MovieCard, {
+      key: m._id,
+      movie: m
+    });
+  });
+  return _react.default.createElement("div", {
+    className: "movies-list"
+  }, _react.default.createElement("div", {
+    className: "movie-list"
+  }), _react.default.createElement("div", {
+    className: "header"
+  }, _react.default.createElement("h1", null, "Nerdflix"), _react.default.createElement(_reactRouterDom.Link, {
+    className: "the-x",
+    to: '/'
+  }, _react.default.createElement("ion-icon", {
+    name: "close"
+  }))), _react.default.createElement("div", {
+    className: "genre-title"
+  }, _react.default.createElement("h2", null, genreType, " Films")), _react.default.createElement("div", null, "$", cards));
+}
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _default = (0, _reactRedux.connect)(function (_ref) {
+  var movies = _ref.movies;
+  return {
+    movies: movies
+  };
+})(GenreView);
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./genre-view.scss":"components/genre-view/genre-view.scss","../movie-card/movie-card":"components/movie-card/movie-card.jsx","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Button":"../node_modules/react-bootstrap/Button.js","react-redux":"../node_modules/react-redux/es/index.js"}],"components/director-view/director-view.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var GenreView =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(GenreView, _React$Component);
-
-  function GenreView() {
-    var _this;
-
-    _classCallCheck(this, GenreView);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(GenreView).call(this));
-    _this.state = {};
-    return _this;
-  }
-
-  _createClass(GenreView, [{
-    key: "render",
-    value: function render() {
-      var movie = this.props.movie;
-      console.log(movie);
-      return _react.default.createElement("div", {
-        className: "cards",
-        id: "cardID"
-      }, _react.default.createElement("img", {
-        src: movie.imageURL,
-        alt: "movie images"
-      }), _react.default.createElement("div", {
-        className: "text-area"
-      }, _react.default.createElement("h1", null, movie.Title), _react.default.createElement("h3", null, movie.Genre.Name)));
-    }
-  }]);
-
-  return GenreView;
-}(_react.default.Component);
-
-exports.GenreView = GenreView;
-},{"react":"../node_modules/react/index.js","./genre-view.scss":"components/genre-view/genre-view.scss"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.DirectorView = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+require("./director-view.scss");
+
+var _movieCard = require("../movie-card/movie-card");
+
+var _reactRouterDom = require("react-router-dom");
+
+var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+
+var _reactRedux = require("react-redux");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function DirectorView(props) {
+  var movies = props.movies,
+      directorName = props.directorName;
+  if (!movies || !movies.length) return null;
+  var cards = movies.map(function (m) {
+    if (m.Director.Name === directorName) return _react.default.createElement(_movieCard.MovieCard, {
+      key: m._id,
+      movie: m
+    });
+  });
+  return _react.default.createElement("div", {
+    className: "dir-movies-list"
+  }, _react.default.createElement("div", {
+    className: "movie-list"
+  }), _react.default.createElement("div", {
+    className: "header"
+  }, _react.default.createElement("h1", null, "Nerdflix"), _react.default.createElement(_reactRouterDom.Link, {
+    className: "the-x",
+    to: '/'
+  }, _react.default.createElement("ion-icon", {
+    name: "close"
+  }))), _react.default.createElement("div", {
+    className: "genre-title"
+  }, _react.default.createElement("h2", null, directorName, " Films")), _react.default.createElement("div", null, "$", cards));
+}
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _default = (0, _reactRedux.connect)(function (_ref) {
+  var movies = _ref.movies;
+  return {
+    movies: movies
+  };
+})(DirectorView);
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var DirectorView =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(DirectorView, _React$Component);
-
-  function DirectorView() {
-    var _this;
-
-    _classCallCheck(this, DirectorView);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(DirectorView).call(this));
-    _this.state = {};
-    return _this;
-  }
-
-  _createClass(DirectorView, [{
-    key: "render",
-    value: function render() {
-      var movie = this.props.movie;
-      console.log(movie);
-      return _react.default.createElement("div", {
-        className: "cards",
-        id: "cardID"
-      }, _react.default.createElement("img", {
-        src: movie.imageURL,
-        alt: "movie images"
-      }), _react.default.createElement("div", {
-        className: "text-area"
-      }, _react.default.createElement("h1", null, movie.Title), _react.default.createElement("h3", null, movie.Genre.Name)));
-    }
-  }]);
-
-  return DirectorView;
-}(_react.default.Component);
-
-exports.DirectorView = DirectorView;
-},{"react":"../node_modules/react/index.js"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./director-view.scss":"components/director-view/director-view.scss","../movie-card/movie-card":"components/movie-card/movie-card.jsx","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Button":"../node_modules/react-bootstrap/Button.js","react-redux":"../node_modules/react-redux/es/index.js"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -40739,7 +40733,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/profile-view/profile-view.jsx":[function(require,module,exports) {
+},{"./../login-view/login-bg.jpg":[["login-bg.98689123.jpg","components/login-view/login-bg.jpg"],"components/login-view/login-bg.jpg"],"_css_loader":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/profile-view/profile-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -40913,7 +40907,7 @@ function (_React$Component) {
       this.setState({
         user: null
       });
-      window.location.reload();
+      window.open('/', '_self');
     }
   }, {
     key: "render",
@@ -40924,13 +40918,22 @@ function (_React$Component) {
           userMe = _this$props.userMe,
           movies = _this$props.movies;
       return _react.default.createElement("div", {
+        className: "prof-view-whole"
+      }, _react.default.createElement("div", {
+        className: "header"
+      }, _react.default.createElement("h1", null, "Nerdflix")), _react.default.createElement("div", {
         className: "profile-view"
-      }, _react.default.createElement(_Button.default, {
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        className: "the-x",
+        to: '/'
+      }, _react.default.createElement("ion-icon", {
+        name: "close"
+      })), _react.default.createElement(_Button.default, {
         className: "unregister",
         onClick: function onClick() {
           return _this3.unRegister();
         }
-      }, " Unregister "), _react.default.createElement("h1", null, this.state.username), _react.default.createElement("h2", null, "Birthday: ", this.state.birthday), _react.default.createElement("h2", null, "Email: ", this.state.email), _react.default.createElement("div", {
+      }, " (unregister) "), _react.default.createElement("h1", null, this.state.username), _react.default.createElement("h2", null, "Birthday: ", this.state.birthday), _react.default.createElement("h2", null, "Email: ", this.state.email), _react.default.createElement("div", {
         className: "favorites"
       }, _react.default.createElement("h2", null, "My Favorite Movies: "), movies.map(function (m) {
         if (m._id === _this3.state.FavoriteMovies.find(function (fav) {
@@ -40950,7 +40953,7 @@ function (_React$Component) {
         onClick: function onClick() {
           return _this3.logOut();
         }
-      }, " Logout "));
+      }, " Logout ")));
     }
   }]);
 
@@ -40986,9 +40989,9 @@ var _movieView = require("../movie-view/movie-view");
 
 var _loginView = require("../login-view/login-view");
 
-var _genreView = require("../genre-view/genre-view");
+var _genreView = _interopRequireDefault(require("../genre-view/genre-view"));
 
-var _directorView = require("../director-view/director-view");
+var _directorView = _interopRequireDefault(require("../director-view/director-view"));
 
 var _registrationView = require("../registration-view/registration-view");
 
@@ -41185,22 +41188,18 @@ function (_React$Component) {
         path: "/genres/:Name",
         render: function render(_ref2) {
           var match = _ref2.match;
-          return movies.map(function (m) {
-            if (m.Genre.Name === match.params.Name) return _react.default.createElement(_genreView.GenreView, {
-              key: m._id,
-              movie: m
-            });
+          return _react.default.createElement(_genreView.default, {
+            genreType: match.params.Name,
+            movies: movies
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/directors/:name",
         render: function render(_ref3) {
           var match = _ref3.match;
-          return movies.map(function (m) {
-            if (m.Director.Name === match.params.name) return _react.default.createElement(_directorView.DirectorView, {
-              key: m._id,
-              movie: m
-            });
+          return _react.default.createElement(_directorView.default, {
+            directorName: match.params.name,
+            movies: movies
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -41377,7 +41376,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51850" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53897" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

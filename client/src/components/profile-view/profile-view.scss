@@ -1,5 +1,13 @@
+.prof-view-whole {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7),rgba(0, 0, 0, 0.7)), url(../login-view/login-bg.jpg);
+  height: 100vh;
+  background-size: cover;
+  background-position: fixed;
+  text-align: center;
+}
+
 .profile-view{
-  margin-top: 100px;
+  margin-top: 10px;
   position: absolute;
   background-color: #000;
   border-radius: 30px;
@@ -7,6 +15,10 @@
   margin-left: -300px;
   height: 600px;
   width: 600px;
+}
+
+.profile-view .the-x {
+  margin-right: 25px;
 }
 
 .profile-view h1{
@@ -51,9 +63,10 @@
 
 .unregister {
   float: right;
-  margin-right: 30px;
-  margin-top: 60px;
+  margin-right: 100px;
+  margin-top: 65px;
   background-color: #000 !important;
   border-color: #000 !important;
   color: red !important;
+  font-size: 12px !important;
 }

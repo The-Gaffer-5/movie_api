@@ -11,8 +11,8 @@ import MoviesList from '../movies-list/movies-list';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
-import { GenreView } from '../genre-view/genre-view';
-import { DirectorView } from '../director-view/director-view';
+import GenreView from '../genre-view/genre-view';
+import DirectorView from '../director-view/director-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { ProfileView } from '../profile-view/profile-view';
 import Button from 'react-bootstrap/Button';
@@ -136,8 +136,8 @@ export class MainView extends React.Component {
           }} />
           <Route path="/register" render={() => <RegistrationView onRegister={user => this.onRegister(user)} />} />
           <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
-          <Route path="/genres/:Name" render={({ match }) => movies.map(m => { if (m.Genre.Name === match.params.Name) return <GenreView key={m._id} movie={m} /> })} />
-          <Route path="/directors/:name" render={({ match }) => movies.map(m => { if (m.Director.Name === match.params.name) return <DirectorView key={m._id} movie={m} /> })} />
+          <Route path="/genres/:Name" render={({ match }) => <GenreView genreType={match.params.Name} movies={movies} />} />
+          <Route path="/directors/:name" render={({ match }) => <DirectorView directorName={match.params.name} movies={movies} />} />
 
           <Route path="/profile" render={() => { if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />; return <ProfileView movies={movies} />; }} />
         </div>

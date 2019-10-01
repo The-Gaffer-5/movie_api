@@ -54,6 +54,7 @@ html body {
 
 .cards img {
   width: 299px;
+  height: 430px;
   display: block;
   position: absolute;
 }
@@ -142,6 +143,10 @@ html body {
 .header {
   height: 100px;
 }
+
+.movies-list {
+  padding-bottom: 70px;
+}
 .movie-view {
   color: #fff;
   background-color: #000;
@@ -152,12 +157,11 @@ html body {
   width: 400px;
   float: right;
   margin-right: 100px;
-  margin-top: 75px;
   position: relative;
 }
 
 .movie-info {
-  padding-top: 170px;
+  padding-top: 100px;
   width: 900px;
 }
 
@@ -252,13 +256,31 @@ input[type=text] {
   border: #333;
 }
 
+input[type=text]:focus {
+  background-color: #333;
+  color: #fff;
+  border: #333;
+}
+
 input[type=password] {
   background-color: #333;
   border: #333;
 }
 
+input[type=password]:focus {
+  background-color: #333;
+  color: #fff;
+  border: #333;
+}
+
 input[type=email] {
   background-color: #333;
+  border: #333;
+}
+
+input[type=email]:focus {
+  background-color: #333;
+  color: #fff;
   border: #333;
 }
 
@@ -285,11 +307,42 @@ input[type=email] {
   font-size: 25px;
   color: #fff;
 }
+
+.the-x {
+  font-size: 40px;
+  color: #fff;
+  float: right;
+  margin-top: 20px;
+  margin-right: 90px;
+}
+
+.the-x:hover {
+  color: #888;
+}
+
+.genre-title h2 {
+  color: #fff;
+  font-weight: 100;
+  font-size: 50px;
+  margin-bottom: 80px;
+}
+.dir-movies-list {
+  background-color: #000;
+  height: 100vh;
+}
 .the-box p {
   margin-top: 20px;
 }
+.prof-view-whole {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/login-bg.98689123.jpg);
+  height: 100vh;
+  background-size: cover;
+  background-position: fixed;
+  text-align: center;
+}
+
 .profile-view {
-  margin-top: 100px;
+  margin-top: 10px;
   position: absolute;
   background-color: #000;
   border-radius: 30px;
@@ -297,6 +350,10 @@ input[type=email] {
   margin-left: -300px;
   height: 600px;
   width: 600px;
+}
+
+.profile-view .the-x {
+  margin-right: 25px;
 }
 
 .profile-view h1 {
@@ -341,11 +398,12 @@ input[type=email] {
 
 .unregister {
   float: right;
-  margin-right: 30px;
-  margin-top: 60px;
+  margin-right: 100px;
+  margin-top: 65px;
   background-color: #000 !important;
   border-color: #000 !important;
   color: red !important;
+  font-size: 12px !important;
 }
 .my-flix {
   color: steelblue;

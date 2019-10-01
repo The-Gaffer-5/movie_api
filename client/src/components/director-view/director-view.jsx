@@ -1,23 +1,39 @@
 import React from 'react';
+import './director-view.scss';
+import { MovieCard } from '../movie-card/movie-card';
+import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button'
+import { connect } from 'react-redux';
 
-export class DirectorView extends React.Component {
-  constructor() {
-    super();
 
-    this.state = {};
-  }
-  render() {
-    const { movie } = this.props;
-    console.log(movie)
+function DirectorView(props) {
+  const { movies, directorName } = props;
 
-    return (
-      <div className="cards" id="cardID">
-        <img src={movie.imageURL} alt="movie images" />
-        <div className="text-area">
-          <h1>{movie.Title}</h1>
-          <h3>{movie.Genre.Name}</h3>
-        </div>
+  if (!movies || !movies.length) return null;
+
+  const cards = movies.map(m => {
+    if (m.Director.Name === directorName) return <MovieCard key={m._id} movie={m} />
+  });
+
+  return (
+    <div className="dir-movies-list">
+      <div className="movie-list">
       </div>
-    );
-  }
+      <div className="header">
+
+        <h1>Nerdflix</h1>
+        <Link className="the-x" to={'/'}>
+          <ion-icon name="close"></ion-icon>
+        </Link>
+      </div>
+      <div className="genre-title">
+        <h2>{directorName} Films</h2>
+      </div>
+      <div>
+        ${cards}
+      </div>
+    </div>
+  );
 }
+
+export default connect(({ movies }) => ({ movies }))(DirectorView);

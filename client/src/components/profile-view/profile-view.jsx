@@ -122,7 +122,7 @@ export class ProfileView extends React.Component {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.setState({ user: null })
-    window.location.reload();
+    window.open('/', '_self');
   }
 
 
@@ -131,30 +131,37 @@ export class ProfileView extends React.Component {
 
 
     return (
-      <div className="profile-view">
-
-        <Button className="unregister" onClick={() => this.unRegister()}> Unregister </Button>
-        <h1>{this.state.username}</h1>
-        <h2>Birthday: {this.state.birthday}</h2>
-        <h2>Email: {this.state.email}</h2>
-        <div className="favorites">
-          <h2>My Favorite Movies: </h2>
-          {movies.map(m => {
-            if (
-              m._id === this.state.FavoriteMovies.find(fav => fav === m._id)
-            ) {
-              return (
-                <div className="each-fav">
-                  <h3>{m.Title}</h3>
-                  <Button className="remove-btn" onClick={(event) => this.handleSubmit(event, m._id)}>(remove)</Button>
-                </div>
-              )
-            }
-          })}
+      <div className="prof-view-whole">
+        <div className="header">
+          <h1>Nerdflix</h1>
         </div>
-        <Button className="logout" onClick={() => this.logOut()}> Logout </Button>
+        <div className="profile-view">
+          <Link className="the-x" to={'/'}>
+            <ion-icon name="close"></ion-icon>
+          </Link>
+          <Button className="unregister" onClick={() => this.unRegister()}> (unregister) </Button>
+          <h1>{this.state.username}</h1>
+          <h2>Birthday: {this.state.birthday}</h2>
+          <h2>Email: {this.state.email}</h2>
+          <div className="favorites">
+            <h2>My Favorite Movies: </h2>
+            {movies.map(m => {
+              if (
+                m._id === this.state.FavoriteMovies.find(fav => fav === m._id)
+              ) {
+                return (
+                  <div className="each-fav">
+                    <h3>{m.Title}</h3>
+                    <Button className="remove-btn" onClick={(event) => this.handleSubmit(event, m._id)}>(remove)</Button>
+                  </div>
+                )
+              }
+            })}
+          </div>
+          <Button className="logout" onClick={() => this.logOut()}> Logout </Button>
 
-      </div >
+        </div >
+      </div>
     )
   }
 }

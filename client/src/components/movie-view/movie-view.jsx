@@ -23,7 +23,13 @@ export class MovieView extends React.Component {
 
     return (
       <div className="movie-view">
-        <h1>Nerdflix</h1>
+        <div className="header">
+
+          <h1>Nerdflix</h1>
+          <Link className="the-x" to={'/'}>
+            <ion-icon name="close"></ion-icon>
+          </Link>
+        </div>
         <img className="movie-poster" src={movie.imageURL} />
         <div className="movie-info">
           <div className="movie-title">
@@ -42,11 +48,6 @@ export class MovieView extends React.Component {
               <Button variant="link">{movie.Director.Name}</Button>
             </Link>
           </div>
-          <Link to={'/'}>
-            <Button className="view-btn" variant="primary" type="button">
-              BACK
-          </Button>
-          </Link>
         </div>
       </div>
 

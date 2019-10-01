@@ -1,25 +1,39 @@
 import React from 'react';
 import './genre-view.scss';
+import { MovieCard } from '../movie-card/movie-card';
+import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button'
+import { connect } from 'react-redux';
 
 
-export class GenreView extends React.Component {
-  constructor() {
-    super();
+function GenreView(props) {
+  const { movies, genreType } = props;
 
-    this.state = {};
-  }
-  render() {
-    const { movie } = this.props;
-    console.log(movie)
+  if (!movies || !movies.length) return null;
 
-    return (
-      <div className="cards" id="cardID">
-        <img src={movie.imageURL} alt="movie images" />
-        <div className="text-area">
-          <h1>{movie.Title}</h1>
-          <h3>{movie.Genre.Name}</h3>
-        </div>
+  const cards = movies.map(m => {
+    if (m.Genre.Name === genreType) return <MovieCard key={m._id} movie={m} />
+  });
+
+  return (
+    <div className="movies-list">
+      <div className="movie-list">
       </div>
-    );
-  }
+      <div className="header">
+
+        <h1>Nerdflix</h1>
+        <Link className="the-x" to={'/'}>
+          <ion-icon name="close"></ion-icon>
+        </Link>
+      </div>
+      <div className="genre-title">
+        <h2>{genreType} Films</h2>
+      </div>
+      <div>
+        ${cards}
+      </div>
+    </div>
+  );
 }
+
+export default connect(({ movies }) => ({ movies }))(GenreView);
