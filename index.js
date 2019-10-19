@@ -9,6 +9,8 @@ const app = express();
 require('./passport');
 const { check, validationResult } = require('express-validator');
 
+const path = require("path");
+
 
 var allowedOrigins = ['http://localhost:1234']
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
@@ -36,6 +38,10 @@ app.use(bodyParser.json());
 var auth = require('./auth')(app);
 
 app.use(express.static('public'));
+app.use('/client', express.static(path.join(__dirname, 'dist')));
+app.get("/client/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 app.use(morgan('common'));
 app.use(function (err, req, res, next) {
   console.error(err.stack);
