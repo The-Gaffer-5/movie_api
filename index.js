@@ -1,3 +1,4 @@
+const path = require("path");
 const cors = require('cors');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
@@ -9,7 +10,7 @@ const app = express();
 require('./passport');
 const { check, validationResult } = require('express-validator');
 
-const path = require("path");
+
 
 
 var allowedOrigins = ['http://localhost:1234']
