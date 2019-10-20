@@ -41,7 +41,7 @@ var auth = require('./auth')(app);
 app.use(express.static('public'));
 app.use('/client', express.static(path.join(__dirname, 'dist')));
 app.get("/client/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "dist/index.html"));
 });
 app.use(morgan('common'));
 app.use(function (err, req, res, next) {
