@@ -128,14 +128,14 @@ export class MainView extends React.Component {
     return (
       <Router basename="/client">
         <div className="main-view">
-          <Route exact path="/client" render={() => {
+          <Route exact path="/" render={() => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             return <MoviesList user={user} movies={movies} />;
           }} />
-          <Route path="client/register" render={() => <RegistrationView onRegister={user => this.onRegister(user)} />} />
-          <Route path="client/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
-          <Route path="client/genres/:Name" render={({ match }) => <GenreView genreType={match.params.Name} movies={movies} />} />
-          <Route path="client/directors/:name" render={({ match }) => <DirectorView directorName={match.params.name} movies={movies} />} />
+          <Route path="/register" render={() => <RegistrationView onRegister={user => this.onRegister(user)} />} />
+          <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
+          <Route path="/genres/:Name" render={({ match }) => <GenreView genreType={match.params.Name} movies={movies} />} />
+          <Route path="/directors/:name" render={({ match }) => <DirectorView directorName={match.params.name} movies={movies} />} />
 
           <Route path="/profile" render={() => { if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />; return <ProfileView movies={movies} />; }} />
         </div>
