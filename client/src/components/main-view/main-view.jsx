@@ -132,12 +132,12 @@ export class MainView extends React.Component {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             return <MoviesList user={user} movies={movies} />;
           }} />
-          <Route exact path="/client/register" render={() => <RegistrationView onRegister={user => this.onRegister(user)} />} />
-          <Route exact path="/client/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
-          <Route exact path="/client/genres/:Name" render={({ match }) => <GenreView genreType={match.params.Name} movies={movies} />} />
-          <Route exact path="/client/directors/:name" render={({ match }) => <DirectorView directorName={match.params.name} movies={movies} />} />
+          <Route exact path="/register" render={() => <RegistrationView onRegister={user => this.onRegister(user)} />} />
+          <Route exact path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
+          <Route exact path="/genres/:Name" render={({ match }) => <GenreView genreType={match.params.Name} movies={movies} />} />
+          <Route exact path="/directors/:name" render={({ match }) => <DirectorView directorName={match.params.name} movies={movies} />} />
 
-          <Route exact path="/client/profile" render={() => { if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />; return <ProfileView movies={movies} />; }} />
+          <Route exact path="/profile" render={() => { if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />; return <ProfileView movies={movies} />; }} />
         </div>
       </Router>
     );
