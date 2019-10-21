@@ -39,10 +39,24 @@ app.use(bodyParser.json());
 var auth = require('./auth')(app);
 
 app.use(express.static('public'));
-app.use('/client', express.static(path.join(__dirname, 'dist')));
-app.get("/client/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist/index.html"));
-});
+
+
+// app.use('/client', express.static(path.join(__dirname, 'dist')));
+// app.get("/client/*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "dist", "index.html"));
+// });
+
+
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  // Handle React routing, return all requests to React app
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
+
+
 app.use(morgan('common'));
 app.use(function (err, req, res, next) {
   console.error(err.stack);
