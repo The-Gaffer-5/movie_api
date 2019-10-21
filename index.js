@@ -49,18 +49,18 @@ var auth = require('./auth')(app);
 app.use(express.static('public'));
 
 
-// app.use('/client', express.static(path.join(__dirname, 'client/dist')));
-// app.get("/client/*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "client/dist", "index.html"));
-// });
-
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/dist'));
-}
-app.get('*', (request, response) => {
-  response.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
+app.use('/client', express.static(path.join(__dirname, 'client/dist')));
+app.get("/client/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/dist", "index.html"));
 });
+
+
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static('client/dist'));
+// }
+// app.get('*', (request, response) => {
+//   response.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
+// });
 
 
 
