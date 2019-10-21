@@ -48,10 +48,10 @@ app.use(express.static('public'));
 
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+  app.use(express.static('client/dist'));
 }
 app.get('*', (request, response) => {
-  response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  response.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
 });
 
 
