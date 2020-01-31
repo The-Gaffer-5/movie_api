@@ -63,7 +63,7 @@ export class ProfileView extends React.Component {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         //opens login view
-        window.open('/', '_self');
+        window.open('/client/', '_self');
       })
       .catch(event => {
         alert('failed to delete user');
