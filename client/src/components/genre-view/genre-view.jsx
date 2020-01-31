@@ -17,10 +17,8 @@ function GenreView(props) {
 
   return (
     <div className="movies-list">
-      <div className="movie-list">
-      </div>
+      <div className="movie-list"></div>
       <div className="header">
-
         <h1>Nerdflix</h1>
         <Link className="the-x" to={'/'}>
           <ion-icon name="close"></ion-icon>

@@ -12,7 +12,6 @@ export function LoginView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //console.log(username, password);
     /* Send a request to the server for authentication */
     axios.post('https://prescottflixapp.herokuapp.com/login', {
       Username: username,
@@ -48,7 +47,6 @@ export function LoginView(props) {
               <Form.Label></Form.Label>
               <Form.Control type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
             </Form.Group>
-
             <Form.Group controlId="formBasicPassword">
               <Form.Label></Form.Label>
               <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />

@@ -12,25 +12,6 @@ export class MovieCard extends React.Component {
     super();
   }
 
-
-  // AddtoFavs(theMovie) {
-  //   console.log(theMovie)
-  //   console.log(theMovie._id)
-  //   event.preventDefault();
-  //   console.log(localStorage.getItem('token'))
-  //   axios.post(`https://prescottflixapp.herokuapp.com/users/${localStorage.getItem('user')}/FavoriteMovies/${theMovie._id}`, {
-  //     headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-  //   })
-  //     .then(response => {
-  //       console.log(response)
-  //       alert(`${theMovie.Title}: Added To Favorites`);
-  //     })
-  //     .catch(event => {
-  //       console.log(event)
-  //       alert(`${theMovie.Title}: NOT added To Favorites`);
-  //     });
-  // }
-
   handleSubmit(event, theMovie) {
     event.preventDefault();
     axios.post(`https://prescottflixapp.herokuapp.com/users/${localStorage.getItem('user')}/FavoriteMovies/${theMovie._id}`, {
@@ -39,7 +20,6 @@ export class MovieCard extends React.Component {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(response => {
-        console.log(response);
         alert('Movie has been added to your Favorite List!');
       })
       .catch(event => {

@@ -12,19 +12,14 @@ export class MovieView extends React.Component {
     this.state = {};
   }
 
-
-
   render() {
-
     const { movie } = this.props;
-
 
     if (!movie) return null;
 
     return (
       <div className="movie-view">
         <div className="header">
-
           <h1>Nerdflix</h1>
           <Link className="the-x" to={'/'}>
             <ion-icon name="close"></ion-icon>
@@ -50,7 +45,6 @@ export class MovieView extends React.Component {
           </div>
         </div>
       </div>
-
     );
   }
 }
@@ -60,5 +54,4 @@ MovieView.propTypes = {
     Title: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired
   }).isRequired,
-  // onClick: PropTypes.func.isRequired
 };

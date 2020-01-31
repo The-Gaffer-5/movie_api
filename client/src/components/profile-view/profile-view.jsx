@@ -70,37 +70,7 @@ export class ProfileView extends React.Component {
       });
   }
 
-  // removeFaveMovie(favMovie) {
-  //   console.log({ favMovie })
-  //   axios.delete(`https://prescottflixapp.herokuapp.com/users/${localStorage.getItem('user')}/FavoriteMovies/${favMovie}`, {
-  //     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-  //   })
-  //     .then(response => {
-  //       console.log(response)
-  //     })
-  //     .catch(event => {
-  //       alert('Oops... something went wrong...');
-  //     });
-  // }
-
-
-  // removeFaveMovie(event, favMovie) {
-  //   event.preventDefault();
-  //   axios.delete(`https://prescottflixapp.herokuapp.com/users/${localStorage.getItem('user')}/FavoriteMovies/${favMovie}`, {
-  //     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-  //   })
-  //     .then(response => {
-  //       // update state with current movie data
-  //       this.getUser(localStorage.getItem('token'));
-  //     })
-  //     .catch(event => {
-  //       alert('Snap something went wrong while deleting this movie from favorite list');
-  //     });
-  // }
-
   handleSubmit(event, theMovie) {
-    console.log(this.state.FavoriteMovies)
-    console.log(theMovie)
     event.preventDefault();
     axios.delete(`https://prescottflixapp.herokuapp.com/users/${localStorage.getItem('user')}/FavoriteMovies/${theMovie}`, {
       Username: localStorage.getItem('user')
@@ -108,7 +78,6 @@ export class ProfileView extends React.Component {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(response => {
-        console.log(response);
         window.location.reload();
         alert('Movie has been removed from your Favorite List!');
       })
@@ -128,7 +97,6 @@ export class ProfileView extends React.Component {
 
   render() {
     const { userMe, movies } = this.props
-
 
     return (
       <div className="prof-view-whole">
@@ -159,7 +127,6 @@ export class ProfileView extends React.Component {
             })}
           </div>
           <Button className="logout" onClick={() => this.logOut()}> Logout </Button>
-
         </div >
       </div>
     )

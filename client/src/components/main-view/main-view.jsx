@@ -32,9 +32,6 @@ export class MainView extends React.Component {
     };
   }
 
-
-
-  // One of the "hooks" available in a React Component
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
@@ -51,7 +48,6 @@ export class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
-        // Assign the result to the state
         this.setState({
           users: response.data
         });
@@ -72,7 +68,6 @@ export class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
-        // Assign the result to the state
         this.props.setMovies(response.data);
       })
       .catch(function (error) {
@@ -84,7 +79,6 @@ export class MainView extends React.Component {
     this.setState({
       user: authData.user.Username
     });
-
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
@@ -116,12 +110,6 @@ export class MainView extends React.Component {
   render() {
     let { movies } = this.props;
     let { user } = this.state;
-
-    // const { movies, selectedMovie, user, newUser, genreName, users, daToken } = this.state;
-
-
-
-    //if (!user) return <RegistrationView onRegister={user => this.onRegister(user)} />;
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
 
